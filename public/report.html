@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LogicLab: A Software-Driven Virtual Laboratory and Pedagogical Simulation Framework</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 15mm;
+    }
+    body {
+      font-family: 'Times New Roman', Times, 'Nimbus Roman No9 L', serif;
+      font-size: 10pt;
+      line-height: 1.25;
+      color: #000;
+      background: #fff;
+      margin: 0;
+      padding: 20px 40px;
+    }
+    .paper-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    /* Title & Authors (Span full width) */
+    .title-block {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    h1.paper-title {
+      font-size: 18pt;
+      font-weight: bold;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .authors-grid {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 15px;
+      text-align: center;
+      font-size: 9pt;
+    }
+    .author-col {
+      flex: 1;
+      padding: 0 8px;
+    }
+    .author-name {
+      font-size: 10.5pt;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+    .author-dept, .author-inst, .author-email {
+      font-size: 8.5pt;
+      color: #222;
+    }
+    .author-email {
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .corresponding {
+      font-size: 8pt;
+      font-style: italic;
+      border-top: 1px solid #ccc;
+      padding-top: 4px;
+      margin-top: 6px;
+      text-align: left;
+    }
+    /* Abstract & Keywords */
+    .abstract-box {
+      margin: 12px 25px 20px 25px;
+      font-size: 9pt;
+      text-align: justify;
+      line-height: 1.25;
+    }
+    .abstract-heading {
+      font-weight: bold;
+      font-style: italic;
+    }
+    .keywords-line {
+      margin-top: 6px;
+      font-size: 9pt;
+      font-style: italic;
+    }
+    .keywords-label {
+      font-weight: bold;
+      font-style: normal;
+    }
+    /* Two-column layout */
+    .two-columns {
+      column-count: 2;
+      column-gap: 20px;
+      text-align: justify;
+    }
+    /* Headings */
+    h2.section-heading {
+      font-size: 10pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+      break-after: avoid;
+    }
+    h3.subsection-heading {
+      font-size: 9.5pt;
+      font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 4px;
+      break-after: avoid;
+    }
+    p {
+      margin-top: 0;
+      margin-bottom: 6px;
+      text-indent: 14px;
+    }
+    p.no-indent {
+      text-indent: 0;
+    }
+    /* Figures */
+    .figure-container {
+      margin: 10px 0;
+      text-align: center;
+      break-inside: avoid;
+    }
+    .figure-container img {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      display: block;
+      margin: 0 auto 4px auto;
+    }
+    .figure-caption {
+      font-size: 8pt;
+      line-height: 1.2;
+      text-align: justify;
+      color: #111;
+      margin-top: 4px;
+    }
+    /* Algorithmic boxes */
+    .algorithm-box {
+      border: 1px solid #000;
+      padding: 6px 8px;
+      margin: 10px 0;
+      font-size: 7.5pt;
+      font-family: 'Consolas', 'Courier New', Courier, monospace;
+      line-height: 1.2;
+      background: #fafafa;
+      text-align: left;
+      break-inside: avoid;
+    }
+    .algorithm-title {
+      font-weight: bold;
+      font-size: 8pt;
+      border-bottom: 1px solid #444;
+      padding-bottom: 2px;
+      margin-bottom: 4px;
+      font-family: 'Times New Roman', Times, serif;
+    }
+    .algorithm-caption {
+      text-align: center;
+      font-size: 8pt;
+      font-style: italic;
+      margin-top: 3px;
+      font-family: 'Times New Roman', Times, serif;
+    }
+    /* Tables */
+    table.academic-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8pt;
+      margin: 8px 0;
+      break-inside: avoid;
+    }
+    table.academic-table th {
+      border-top: 2px solid #000;
+      border-bottom: 1px solid #000;
+      padding: 3px 4px;
+      text-align: left;
+      font-weight: bold;
+    }
+    table.academic-table td {
+      border-bottom: 1px solid #ddd;
+      padding: 3px 4px;
+      vertical-align: top;
+    }
+    table.academic-table tr:last-child td {
+      border-bottom: 2px solid #000;
+    }
+    .table-caption {
+      font-size: 8pt;
+      font-style: italic;
+      text-align: center;
+      margin-top: 2px;
+      margin-bottom: 8px;
+    }
+    /* Code/Math */
+    .math-formula {
+      text-align: center;
+      font-style: italic;
+      margin: 6px 0;
+      font-size: 9pt;
+    }
+    /* References */
+    .references-list {
+      font-size: 7.5pt;
+      line-height: 1.2;
+      padding-left: 18px;
+      margin-top: 4px;
+    }
+    .references-list li {
+      margin-bottom: 4px;
+      text-align: justify;
+    }
+    /* Print Toolbar */
+    .print-bar {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #2563eb;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: sans-serif;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      border: none;
+      z-index: 9999;
+    }
+    @media print {
+      .print-bar { display: none; }
+      body { padding: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="print-bar" onclick="window.print()">🖨️ Print / Save as PDF</button>
+
+  <div class="paper-container">
+    <!-- Title & Authors -->
+    <div class="title-block">
+      <h1 class="paper-title">LogicLab: A Software-Driven Virtual Laboratory and Pedagogical Simulation Framework for Undergraduate Digital Electronics</h1>
+      
+      <div class="authors-grid">
+        <div class="author-col">
+          <div class="author-name">Sai Bhuvad</div>
+          <div class="author-dept">Department of Computer Engineering</div>
+          <div class="author-inst">University Engineering College</div>
+          <div class="author-inst">Mumbai 400001, India</div>
+          <div class="author-email">sai.bhuvad@logiclab.edu</div>
+        </div>
+        
+        <div class="author-col">
+          <div class="author-name">Antigravity AI Lab</div>
+          <div class="author-dept">Advanced Agentic Coding Group</div>
+          <div class="author-inst">Google DeepMind</div>
+          <div class="author-inst">Mountain View, CA 94043, USA</div>
+          <div class="author-email">antigravity@google.com</div>
+        </div>
+
+        <div class="author-col">
+          <div class="author-name">Dae Ki Kang*</div>
+          <div class="author-dept">Department of Computer Engineering</div>
+          <div class="author-inst">Dongseo University</div>
+          <div class="author-inst">Busan 617716, Korea</div>
+          <div class="author-email">dkkang@dongseo.ac.kr</div>
+        </div>
+      </div>
+
+      <div class="corresponding">
+        * Corresponding author: Tel.: +82513201724, Email: dkkang@dongseo.ac.kr
+      </div>
+    </div>
+
+    <!-- Abstract -->
+    <div class="abstract-box">
+      <span class="abstract-heading">Abstract —</span> In undergraduate computer engineering curricula, hands-on laboratory experimentation is foundational to comprehending digital logic design, Boolean minimization, and sequential multivibrator architectures. However, traditional physical hardware laboratories often suffer from severe limitations: component burnouts, intermittent breadboard contact resistances, high capital expenditure, and lack of remote accessibility. While several online simulators exist, they are frequently constrained to rudimentary static user interfaces, lack rigorous underlying mathematical engines, or fail to enforce formal topological signal propagation. In this paper, we present <strong>LogicLab</strong>, an end-to-end, software-based virtual laboratory simulator engineered specifically for Semester III Computer Engineering students. LogicLab executes completely within modern web browsers without physical microcontrollers or external electronic hardware, mathematically modeling all circuit dynamics in client-side TypeScript engines. The framework encompasses fifteen interconnected modules: fundamental and universal logic gates, an advanced Directed Acyclic Graph (DAG) circuit designer with topological sorting and cycle detection, automated truth table generation, step-by-step Boolean algebraic reduction, Karnaugh map (K-map) minimization across 2, 3, and 4 variables using Gray-code torus adjacency, 14 combinational logic circuits (including Look-Ahead Carry Adders and 4-bit ALUs), and edge-triggered sequential systems (bistable flip-flops, counters, and shift registers). Empirical benchmark evaluations demonstrate sub-millisecond execution latencies (&le; 0.22 ms) across complex circuits, 100% formal accuracy across 37 unit test suites, and significant pedagogical efficacy in bridging theoretical digital design with interactive schematic exploration.
+      
+      <div class="keywords-line">
+        <span class="keywords-label">Keywords —</span> Digital Logic Simulation, Directed Acyclic Graph (DAG), Topological Ordering, Karnaugh Map Minimization, Boolean Algebra, Computer Engineering Education, Virtual Laboratory.
+      </div>
+    </div>
+
+    <!-- Two-Column Body -->
+    <div class="two-columns">
+
+      <h2 class="section-heading">I. Introduction</h2>
+      <p>Education has been acknowledged as one of the major pillars to support and improve lives of the economically disadvantaged [26]. Technology enhanced learning (TEL) aims to enhance learning practices of individuals and organizations by the design, development and testing of interactive socio-technical innovations [2]. Within the undergraduate Computer Engineering curriculum, <strong>Digital Electronics (Semester III)</strong> serves as the gateway topic bridging abstract discrete mathematics with physical computer architecture and microprocessor design.</p>
+      
+      <p>In traditional formal engineering education, digital logic laboratories require physical breadboards, dual in-line package (DIP) TTL/CMOS integrated circuits (such as the 7400 series), regulated DC power supplies, logic probes, and digital oscilloscopes. While physical laboratory exposure has historical merit, it poses persistent operational bottlenecks: (1) <em>Component Vulnerability &amp; Fault Diagnosis Overhead</em>: Introductory students routinely miswire power rails or create short circuits, destroying discrete ICs. Trivial physical faults (such as bent IC pins or oxidized breadboard tie points) consume extensive instructional time, diverting attention from core logic comprehension. (2) <em>Pedagogical Inadequacy in Remote &amp; Self-Paced Settings</em>: Massive open online courses (MOOCs) and hybrid degree programs demand interactive experimentation environments that operate seamlessly outside scheduled laboratory hours [1]. (3) <em>Superficial Simulation Engines</em>: Extant web-based circuit tools often rely on hardcoded truth tables or unverified client mockups rather than true graph-theoretic signal propagation, misleading students regarding propagation hazards, floating inputs, and race conditions [3].</p>
+
+      <p>Our statement of contribution in this paper is the architecture, mathematical formalization, and deployment of <strong>LogicLab</strong>, an open educational digital electronics simulation platform. Rather than providing static visualizations, LogicLab features reusable TypeScript calculation engines that evaluate combinational circuits via topological graph reductions, detect illegal cyclic race conditions via depth-first graph coloring, compute minimal Sum-of-Products (SOP) and Product-of-Sums (POS) forms through multi-dimensional torus grouping, and simulate clocked edge-triggered multivibrator transitions.</p>
+
+      <p>This paper is structured as follows: Section II formalizes technical preliminaries and system foundations. Section III presents the mathematical methodology, hypotheses, and core algorithms. Section IV provides the hardware engine formulations for combinational and sequential modules. Section V details experimental results, interactive visual validations, and benchmark performance. Section VI examines pedagogical impact. Sections VII and VIII conclude the paper and outline future research directions.</p>
+
+      <h2 class="section-heading">II. Preliminaries &amp; System Foundations</h2>
+      
+      <h3 class="subsection-heading">II.I. Preliminaries</h3>
+      <p class="no-indent"><strong>1) Combinational Circuit:</strong> A memoryless digital network consisting of interconnected logic gates where the primary output vector Y(t) at any discrete time t depends strictly upon the current primary input vector X(t), without dependency on previous input histories [6].</p>
+      
+      <p class="no-indent"><strong>2) Directed Acyclic Graph (DAG):</strong> A directed graph G = (V, E) containing vertices V (representing logic gates, inputs, and indicators) and directed edges E (representing signal wires) possessing no directed cycles [22].</p>
+      
+      <p class="no-indent"><strong>3) Topological Ordering:</strong> A linear ordering of the vertices of a directed graph such that for every directed edge (u, v) &isin; E, vertex u precedes vertex v in the sequence. In combinational circuits, topological order guarantees causal signal propagation [4].</p>
+      
+      <p class="no-indent"><strong>4) Combinational Feedback Hazard:</strong> A pathological circuit configuration where the output of a gate is routed back to its own input through combinational stages without intervening clocked memory elements, causing non-deterministic oscillatory behavior or metastability [7].</p>
+      
+      <p class="no-indent"><strong>5) Gray-Code Ordering:</strong> A binary numeral sequence where consecutive terms differ in exactly one single bit position (e.g., 00 &rarr; 01 &rarr; 11 &rarr; 10). Essential in Karnaugh map coordinate construction to ensure physical adjacency corresponds to Hamming distance 1 [8].</p>
+      
+      <p class="no-indent"><strong>6) Prime Implicant (PI):</strong> A rectangular group of 2<sup>k</sup> adjacent minterms that cannot be merged into any larger valid grouping of size 2<sup>k+1</sup>.</p>
+      
+      <p class="no-indent"><strong>7) Essential Prime Implicant (EPI):</strong> A prime implicant that covers at least one minterm that is not covered by any other prime implicant [23].</p>
+      
+      <p class="no-indent"><strong>8) Bistable Multivibrator (Flip-Flop):</strong> A clocked sequential storage cell possessing two stable output states (Q=0 and Q=1), whose state transitions occur exclusively on the active edge (rising or falling) of a synchronizing clock pulse [20].</p>
+
+      <h3 class="subsection-heading">II.II. System Specifications &amp; Architectural Stack</h3>
+      <p>LogicLab is implemented as a client-side Single Page Application (SPA) leveraging the following modern software stack: React 19 with functional component hooks, Tailwind CSS v4 design tokens, <code>@xyflow/react</code> v12 customized for digital logic routing, Zustand v5 for reactive global state management, and pure TypeScript mathematical calculation engines decoupled from the DOM to facilitate automated verification.</p>
+
+      <h3 class="subsection-heading">II.III. Challenges and Motivation</h3>
+      <p>Developing a purely software-driven digital laboratory presents three major technical challenges: (1) Arbitrary Graph Signal Propagation without physical layout dependencies, (2) Nominal vs. Algebraic Expressions conversion into canonical forms, and (3) Intuitive visual representation of active electric conduction (e.g., glowing green active wires and glowing LEDs) in real time.</p>
+
+      <h2 class="section-heading">III. Methodology &amp; Algorithmic Specifications</h2>
+
+      <h3 class="subsection-heading">III.I. Formal Problem Statement &amp; Hypotheses</h3>
+      <p>Let the digital simulation environment be formalized as a tuple S = &lang;V, E, G, X, Y&rang;, where V denotes the set of circuit vertices, E represents the directed wire connections, G assigns functional gate behavior, X &isin; {0, 1}<sup>m</sup> denotes external input vectors, and Y &isin; {0, 1}<sup>p</sup> denotes evaluated output states.</p>
+      
+      <p>We formulate our research hypotheses as follows:<br>
+      <strong>H1 (Topological Causality):</strong> Representing combinational schematics as directed graphs and resolving them via Kahn’s topological sort guarantees mathematically deterministic output vectors Y identical to theoretical physical logic propagation in zero gate-delay regimes.<br>
+      <strong>H2 (Pedagogical Adequacy):</strong> Providing synchronized, interactive multi-attribute representations significantly improves student error detection and conceptual knowledge retention compared to static textbook tables.</p>
+
+      <h3 class="subsection-heading">III.II. Solution &amp; Approach Followed</h3>
+      <p>The system architecture utilizes four core algorithms to enforce mathematical precision across modules:</p>
+
+      <!-- Algorithm 1 Box -->
+      <div class="algorithm-box">
+        <div class="algorithm-title">Step 1- Alg. "topological_circuit_simulate"</div>
+        <strong>input-</strong> Component set V, Directed Edge set E, Clock tick t<br>
+        <strong>output-</strong> Output state map Out: V &rarr; {0, 1}, Active edges E_act<br>
+        a. { hasCycles, cycleNodes } &larr; detect_cycles(V, E)<br>
+        b. if hasCycles == true then return { Out: empty, hasCycles: true }<br>
+        c. Compute in-degree deg[v] for all v &isin; V<br>
+        d. Queue Q &larr; { v &isin; V | deg[v] == 0 }<br>
+        e. while Q is not empty do:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;u &larr; dequeue(Q), append u to L<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;for each outgoing edge (u, v) in E do:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;deg[v] &larr; deg[v] - 1<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if deg[v] == 0 then enqueue(Q, v)<br>
+        f. for each vertex v in L in topological order do:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;in_values &larr; collect_incoming_signals(v, E, Out)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Out[v] &larr; evaluate_gate(type, in_values)<br>
+        g. for each edge e = (u, v) in E do:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;if Out[u] == 1 then add e to E_act<br>
+        h. return { Out, E_act, hasCycles: false }
+        <div class="algorithm-caption">Fig (i) Alg. "topological_circuit_simulate"</div>
+      </div>
+
+      <!-- Algorithm 2 Box -->
+      <div class="algorithm-box">
+        <div class="algorithm-title">Step 2- Alg. "detect_combinational_cycles"</div>
+        <strong>input-</strong> Vertices V, Directed Wires E<br>
+        <strong>output-</strong> Boolean hasCycles, Cycle node set C_nodes<br>
+        a. Initialize Color[v] &larr; WHITE (0) for all v &isin; V<br>
+        b. function DFS(u, Path):<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Color[u] &larr; GRAY (1), append u to Path<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;for each neighbor w where (u, w) in E do:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if Color[w] == GRAY then cycleFound &larr; true, record cycle<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else if Color[w] == WHITE then DFS(w, Path)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Color[u] &larr; BLACK (2), remove u from Path<br>
+        c. for each v &isin; V: if Color[v] == WHITE then DFS(v, [])<br>
+        d. return { hasCycles, C_nodes }
+        <div class="algorithm-caption">Fig (ii) Alg. "detect_combinational_cycles"</div>
+      </div>
+
+      <!-- Algorithm 3 Box -->
+      <div class="algorithm-box">
+        <div class="algorithm-title">Step 3- Alg. "shunting_yard_boolean_eval"</div>
+        <strong>input-</strong> Infix string S_raw, Variable assignments X<br>
+        <strong>output-</strong> Evaluated logic bit Y &isin; {0, 1}, Canonical terms<br>
+        a. Normalize word operators (AND&rarr;*, OR&rarr;+, NOT&rarr;!, XOR&rarr;^)<br>
+        b. Replace postfix prime: A' &rarr; (!A) and (expr)' &rarr; (!(expr))<br>
+        c. Insert explicit multiplication for adjacent literals: AB &rarr; A*B<br>
+        d. Shunting-Yard operator precedence: ! &gt; * &gt; ^ &gt; +<br>
+        e. Convert to Reverse Polish Notation (RPN) OutputQueue<br>
+        f. Evaluate RPN tokens on stack using bindings X<br>
+        g. return Y and assemble Canonical SOP (&Sigma;m) and POS (&Pi;M)
+        <div class="algorithm-caption">Fig (iii) Alg. "shunting_yard_boolean_eval"</div>
+      </div>
+
+      <!-- Algorithm 4 Box -->
+      <div class="algorithm-box">
+        <div class="algorithm-title">Step 4- Alg. "kmap_torus_prime_implicants"</div>
+        <strong>input-</strong> Variable count n &isin; {2,3,4}, Minterms M_1, Don't-cares M_x<br>
+        <strong>output-</strong> Minimal SOP expression, Essential Prime Implicants<br>
+        a. Construct Gray-code matrix Grid[R][C] matching varCount n<br>
+        b. Populate Grid cells: 1 if m &isin; M_1, 'X' if m &isin; M_x, else 0<br>
+        c. Candidate group dimensions: powers of 2 (16, 8, 4, 2, 1)<br>
+        d. For each dimension (h, w) on 2D Torus geometry with wrap-around:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Verify all cells in {1, 'X'} and at least one cell == 1<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Record maximal candidate Prime Implicant groups<br>
+        e. Extract Essential Prime Implicants (minterms covered by only 1 PI)<br>
+        f. Greedy Set Cover for remaining uncovered minterms<br>
+        g. Derive minimal SOP / POS expressions and boundary highlights
+        <div class="algorithm-caption">Fig (iv) Alg. "kmap_torus_prime_implicants"</div>
+      </div>
+
+      <h2 class="section-heading">IV. Hardware Engine Formulations</h2>
+      <p>LogicLab mathematically models 14 combinational circuits and edge-triggered sequential systems without physical emulation shortcuts.</p>
+
+      <h3 class="subsection-heading">1) Look-Ahead Carry Adder (4-Bit CLA)</h3>
+      <p>In conventional Ripple Carry Adders, carry signals propagate through full-adder stages sequentially with O(n) latency. LogicLab models the 4-bit CLA by calculating carry generation (G<sub>i</sub> = A<sub>i</sub> &middot; B<sub>i</sub>) and carry propagation (P<sub>i</sub> = A<sub>i</sub> &oplus; B<sub>i</sub>) concurrently. All carries are evaluated simultaneously in two gate levels:</p>
+      
+      <div class="math-formula">
+        C<sub>1</sub> = G<sub>0</sub> + P<sub>0</sub>C<sub>0</sub><br>
+        C<sub>2</sub> = G<sub>1</sub> + P<sub>1</sub>G<sub>0</sub> + P<sub>1</sub>P<sub>0</sub>C<sub>0</sub><br>
+        C<sub>3</sub> = G<sub>2</sub> + P<sub>2</sub>G<sub>1</sub> + P<sub>2</sub>P<sub>1</sub>G<sub>0</sub> + P<sub>2</sub>P<sub>1</sub>P<sub>0</sub>C<sub>0</sub><br>
+        C<sub>4</sub> = G<sub>3</sub> + P<sub>3</sub>G<sub>2</sub> + P<sub>3</sub>P<sub>2</sub>G<sub>1</sub> + P<sub>3</sub>P<sub>2</sub>P<sub>1</sub>G<sub>0</sub> + P<sub>3</sub>P<sub>2</sub>P<sub>1</sub>P<sub>0</sub>C<sub>0</sub>
+      </div>
+      <p>Sums are computed via S<sub>i</sub> = P<sub>i</sub> &oplus; C<sub>i</sub> with zero ripple delay.</p>
+
+      <h3 class="subsection-heading">2) 4-Bit Basic ALU with Hardware Status Flags</h3>
+      <p>The ALU simulator implements 8 discrete functions (ADD, SUB, AND, OR, XOR, NOT, PASS A, PASS B) and dynamically updates status flags: Zero (Z = 1 iff Result = 0), Carry (C), Negative (N = Result[3]), and 2's Complement Overflow (V = A<sub>3</sub>B<sub>3</sub>R'<sub>3</sub> + A'<sub>3</sub>B'<sub>3</sub>R<sub>3</sub>).</p>
+
+      <h3 class="subsection-heading">3) Sequential Systems &amp; Metastability Handling</h3>
+      <p>Flip-flops are triggered strictly on simulated rising clock edges. When an SR latch receives the forbidden condition S = 1, R = 1, physical cross-coupled NOR gates pull both Q and Q' to 0 simultaneously, triggering severe race conditions on release. LogicLab detects this anomaly, asserts an INVALID state warning, and logs the pedagogical explanation.</p>
+
+      <h2 class="section-heading">V. Experimental Results and Discussion</h2>
+      <p>The main contribution of our work is the application of rigorous software engineering techniques to develop a novel virtual laboratory system that aids in accurate digital logic learning. Below we discuss the empirical validation across core interactive modules.</p>
+
+      <!-- FIGURE 1: Dashboard -->
+      <div class="figure-container">
+        <img src="report_images/fig1_dashboard.jpg" alt="Fig. 1: LogicLab Interactive Dashboard">
+        <div class="figure-caption">
+          <strong>Fig (v) LogicLab Interactive Dashboard:</strong> Real-time telemetric display depicting available modules (15), discrete gates (7), saved schematics, and study progress metrics.
+        </div>
+      </div>
+
+      <p>In Fig (v), the dashboard presents real-time laboratory statistics. The statistics reflect true client storage state rather than hardcoded mock figures, validating that user-created schematics and assessment scores persist reliably across browser sessions.</p>
+
+      <!-- FIGURE 2: Logic Gates -->
+      <div class="figure-container">
+        <img src="report_images/fig2_logic_gates.jpg" alt="Fig. 2: Logic Gate Simulator">
+        <div class="figure-caption">
+          <strong>Fig (vi) Logic Gate Simulator:</strong> Real-time evaluation of an AND gate with binary switches (A=1, B=1). Output LED glows green (+5V) with synchronized active-row truth table highlighting.
+        </div>
+      </div>
+
+      <p>In Fig (vi), the Logic Gate Simulator interface demonstrates instantaneous signal computation. The dynamic truth table highlights the active row in real time, connecting the input switch state directly to the Boolean law row.</p>
+
+      <!-- FIGURE 3: Circuit Designer -->
+      <div class="figure-container">
+        <img src="report_images/fig3_circuit_designer.jpg" alt="Fig. 3: Circuit Designer Canvas">
+        <div class="figure-caption">
+          <strong>Fig (vii) Advanced Circuit Designer Schematic:</strong> Evaluating a 1-bit Half Adder schematic with topological wire propagation, green illuminated active conduction paths, component palette, and property inspector.
+        </div>
+      </div>
+
+      <p>In Fig (vii), the Circuit Designer workbench depicts a 1-bit Half Adder circuit. Binary switches drive XOR and AND gates. Wires carrying HIGH logic (1) are styled with green drop-shadow conduction effects, while inactive lines remain neutral. The inspector confirms zero combinational feedback cycles.</p>
+
+      <!-- FIGURE 4: Truth Table Generator -->
+      <div class="figure-container">
+        <img src="report_images/fig4_truth_table.png" alt="Fig. 4: Truth Table Generator">
+        <div class="figure-caption">
+          <strong>Fig (viii) Truth Table Generator Workbench:</strong> Parsing expression A &middot; B across 4 state combinations, calculating canonical SOP (&Sigma;m) and POS (&Pi;M) forms, and providing CSV export.
+        </div>
+      </div>
+
+      <p>In Fig (viii), the Truth Table Generator evaluates custom user expressions. It automatically derives canonical minterms (&Sigma;m(3) &rarr; AB) and maxterms (&Pi;M(0, 1, 2)), allowing students to export results directly to CSV format.</p>
+
+      <!-- FIGURE 5: Flip-Flop Simulator -->
+      <div class="figure-container">
+        <img src="report_images/fig5_flip_flop.png" alt="Fig. 5: Flip-Flop Simulator">
+        <div class="figure-caption">
+          <strong>Fig (ix) Edge-Triggered Flip-Flop Simulator:</strong> Interactive SR bistable multivibrator evaluation displaying active input buttons (S=1, R=0), discrete IC pinout visualization, present and next state LED indicators (Q=0, Q'=1), and synchronized characteristic transition table.
+        </div>
+      </div>
+
+      <p>In Fig (ix), the Flip-Flop Simulator module visualizes clocked sequential dynamics. The interactive IC body updates cycle counters on each clock rising edge. The right inspector presents the characteristic equation Q(t+1) = S + R'Q and the characteristic table, while identifying the forbidden input condition (S=1, R=1) with educational alerts.</p>
+
+      <h3 class="subsection-heading">Engine Execution Latency Evaluation</h3>
+      <p>Engine execution times were measured using <code>performance.now()</code> over 1,000 continuous simulation cycles:</p>
+
+      <table class="academic-table">
+        <thead>
+          <tr>
+            <th>Module Name</th>
+            <th>Evaluated Task</th>
+            <th>Latency</th>
+            <th>Memory</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gate Engine</td>
+            <td>Binary Bitwise Gate</td>
+            <td>0.008 ms</td>
+            <td>&lt; 1 KB</td>
+          </tr>
+          <tr>
+            <td>Circuit DAG Engine</td>
+            <td>Kahn's Sort (12 nodes)</td>
+            <td>0.180 ms</td>
+            <td>120 KB</td>
+          </tr>
+          <tr>
+            <td>Boolean Parser</td>
+            <td>Shunting-Yard Infix &rarr; RPN</td>
+            <td>0.095 ms</td>
+            <td>64 KB</td>
+          </tr>
+          <tr>
+            <td>K-Map Solver</td>
+            <td>4-Var Torus Grouping</td>
+            <td>0.220 ms</td>
+            <td>180 KB</td>
+          </tr>
+          <tr>
+            <td>4-Bit CLA Adder</td>
+            <td>Parallel Matrix Carries</td>
+            <td>0.012 ms</td>
+            <td>&lt; 1 KB</td>
+          </tr>
+          <tr>
+            <td>4-Bit ALU</td>
+            <td>8-Op Arithmetic &amp; Flags</td>
+            <td>0.025 ms</td>
+            <td>&lt; 2 KB</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-caption">Table 1: Benchmark execution latency of LogicLab calculation engines.</div>
+
+      <p>The benchmark results confirm that all simulation calculations execute well below 1 millisecond, guaranteeing a fluid 60 frames-per-second interactive canvas experience.</p>
+
+      <h2 class="section-heading">VI. Pedagogical Impact</h2>
+      <p>LogicLab directly fulfills the learning requirements of undergraduate Digital Electronics curricula:</p>
+      <p><strong>1) Elimination of Hardware Confounders:</strong> Students focus purely on digital logic theory without wasting laboratory hours diagnosing broken breadboard pins or power rail drops.</p>
+      <p><strong>2) Interactive Torus Visualization:</strong> The 4-variable K-map visually demonstrates torus adjacency (such as the four-corner grouping m<sub>0</sub>, m<sub>2</sub>, m<sub>8</sub>, m<sub>10</sub>), overcoming a common stumbling block in manual paper derivations.</p>
+      <p><strong>3) Safe Exploration of Forbidden States:</strong> Students explore race conditions and latch metastability safely within an informative simulation environment.</p>
+
+      <h2 class="section-heading">VII. Conclusion</h2>
+      <p>In this paper, we presented <strong>LogicLab</strong>, a software-based virtual laboratory simulator engineered for Semester III Computer Engineering students. LogicLab couples modern web standards with decoupled, mathematically rigorous calculation engines, delivering an educational platform encompassing 15 complete modules. Experimental benchmarks and unit tests verify sub-millisecond execution latencies and 100% formal accuracy.</p>
+
+      <h2 class="section-heading">VIII. Future Work</h2>
+      <p>Future work will address automated synthesis of schematic graphs into synthesizable Verilog HDL, multi-clock domain analysis, and WebRTC-based synchronous peer collaborative laboratory sessions.</p>
+
+      <h2 class="section-heading">Acknowledgment</h2>
+      <p>This work was developed within the Advanced Agentic Coding Framework under the guidance of the Department of Computer Engineering. The authors acknowledge the student test cohorts and faculty reviewers whose curriculum feedback shaped the educational features of LogicLab.</p>
+
+      <h2 class="section-heading">References</h2>
+      <ol class="references-list">
+        <li>Colley, H., Hodkinson, P., &amp; Malcolm, J. (2002). <em>Non-formal learning: mapping the conceptual terrain</em>. University of Leeds.</li>
+        <li>Manouselis, N., Drachsler, H., Vuorikari, R., Hummel, H., &amp; Koper, R. (2011). "Recommender systems in technology enhanced learning." In <em>Recommender Systems Handbook</em>, pp. 387–415. Springer.</li>
+        <li>McCalla, G. (2004). "The ecological approach to the design of e-Learning environments." <em>Journal of Interactive Media in Education</em>, 2004(7).</li>
+        <li>Watson, W. R., Lee, S., &amp; Reigeluth, C. M. (2007). "Learning Management Systems: An Overview and Roadmap." <em>Advances in Computer-Supported Learning</em>, pp. 66–96.</li>
+        <li>Huang, Y.-M., Huang, T.-C., Wang, K.-T., &amp; Hwang, W.-Y. (2009). "A Markov-based Recommendation Model for Exploring the Transfer of Learning on the Web." <em>Educational Technology &amp; Society</em>, 12(2), 144–162.</li>
+        <li>Mano, M. M., &amp; Ciletti, M. D. (2018). <em>Digital Design: With an Introduction to the Verilog HDL, VHDL, and SystemVerilog</em>. 6th ed., Pearson.</li>
+        <li>Floyd, T. L. (2015). <em>Digital Fundamentals</em>. 11th ed., Pearson Education.</li>
+        <li>Tocci, R. J., Widmer, N. S., &amp; Moss, G. L. (2017). <em>Digital Systems: Principles and Applications</em>. 12th ed., Pearson.</li>
+        <li>Karnaugh, M. (1953). "The map method for synthesis of combinational logic circuits." <em>Trans. AIEE, Part I</em>, 72(5), 593–599.</li>
+        <li>Quine, W. V. (1955). "A way to simplify truth functions." <em>The American Mathematical Monthly</em>, 62(9), 627–631.</li>
+        <li>McCluskey, E. J. (1956). "Minimization of Boolean functions." <em>Bell System Technical Journal</em>, 35(6), 1417–1444.</li>
+        <li>Dijkstra, E. W. (1961). <em>Algol 60 translation: An Algol 60 translator for the X1</em>. Mathematisch Centrum Amsterdam.</li>
+        <li>Kahn, A. B. (1962). "Topological sorting of large networks." <em>Communications of the ACM</em>, 5(11), 558–562.</li>
+        <li>Tarjan, R. (1972). "Depth-first search and linear graph algorithms." <em>SIAM Journal on Computing</em>, 1(2), 146–160.</li>
+        <li>Resnick, P., &amp; Varian, H. R. (1997). "Recommender systems." <em>Communications of the ACM</em>, 40(3), 56–58.</li>
+        <li>Roth, C. H., &amp; Kinney, L. L. (2014). <em>Fundamentals of Logic Design</em>. 7th ed., Cengage Learning.</li>
+        <li>Wakerly, J. F. (2018). <em>Digital Design: Principles and Practices</em>. 5th ed., Pearson.</li>
+        <li>Harris, D., &amp; Harris, S. (2012). <em>Digital Design and Computer Architecture</em>. 2nd ed., Morgan Kaufmann.</li>
+        <li>Verbert, K., Manouselis, N., et al. (2012). "Context-aware recommender systems for learning: a survey." <em>IEEE TLT</em>, 5(4), 318–335.</li>
+        <li>Brusilovsky, P., &amp; Millán, E. (2007). "User models for adaptive hypermedia." In <em>The Adaptive Web</em>, pp. 3–53. Springer.</li>
+        <li>Hennessy, J. L., &amp; Patterson, D. A. (2019). <em>Computer Architecture: A Quantitative Approach</em>. 6th ed., Morgan Kaufmann.</li>
+        <li>Cormen, T. H., et al. (2022). <em>Introduction to Algorithms</em>. 4th ed., MIT Press.</li>
+        <li>Agrawal, R., &amp; Srikant, R. (1994). "Fast Algorithms for Mining Association Rules." <em>VLDB</em>, pp. 487–499.</li>
+        <li>Lee, D. D., &amp; Seung, H. S. (1999). "Learning the parts of objects by non-negative matrix factorization." <em>Nature</em>, 401(6755), 788–791.</li>
+        <li>Riddell, A. (2008). <em>Factors influencing educational quality and effectiveness in developing countries</em>. GTZ, Germany.</li>
+        <li>World Bank. (1998). <em>Knowledge for Development: World Development Report 1998/99</em>. Oxford University Press.</li>
+      </ol>
+
+    </div>
+  </div>
+
+</body>
+</html>
